@@ -1,0 +1,120 @@
+.calendar-grid {
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.current-month-display {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-transform: capitalize;
+}
+
+.nav-btn {
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn:hover {
+  background: var(--bg-main);
+  color: var(--primary);
+}
+
+.days-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 1rem;
+}
+
+.day-name {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05rem;
+}
+
+.grid-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  margin: 2px;
+}
+
+.cell:hover:not(.disabled) {
+  background: var(--bg-main);
+}
+
+.cell.disabled {
+  color: var(--text-muted);
+  opacity: 0.3;
+  cursor: default;
+}
+
+.cell.selected-start,
+.cell.selected-end {
+  background: var(--primary) !important;
+  color: white !important;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.cell.in-range {
+  background: var(--selection-range);
+  border-radius: 0;
+  margin-left: -2px;
+  margin-right: -2px;
+}
+
+.cell.today {
+  color: var(--primary);
+  font-weight: 700;
+  border: 2px solid var(--primary);
+}
+
+.cell.selected-start {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.cell.selected-end {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.number {
+  position: relative;
+  z-index: 2;
+}
