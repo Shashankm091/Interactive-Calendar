@@ -26,6 +26,7 @@
   font-weight: 800;
   background: linear-gradient(135deg, var(--text-main), var(--primary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
 }
@@ -79,6 +80,16 @@
 
 .selection-status strong {
   color: var(--primary);
+}
+
+.days-badge {
+  margin-left: 1rem;
+  padding: 0.2rem 0.6rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .copyright {

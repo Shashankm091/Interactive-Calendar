@@ -15,11 +15,21 @@ import {
   isToday,
   eachDayOfInterval
 } from 'date-fns';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Info } from 'lucide-react';
+import { isHoliday } from '../utils/holidays';
 import './CalendarGrid.css';
 
 const CalendarGrid = ({ currentMonth, setCurrentMonth, selection, setSelection }) => {
   const [hoverDate, setHoverDate] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleMonthChange = (newMonth) => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentMonth(newMonth);
+      setTimeout(() => setIsAnimating(false), 50);
+    }, 300);
+  };
 
   const onDateClick = (day) => {
     if (!selection.start || (selection.start && selection.end)) {
@@ -48,13 +58,13 @@ const CalendarGrid = ({ currentMonth, setCurrentMonth, selection, setSelection }
   const renderHeader = () => {
     return (
       <div className="grid-header">
-        <button className="nav-btn" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
+        <button className="nav-btn" onClick={() => handleMonthChange(subMonths(currentMonth, 1))}>
           <ChevronLeft size={20} />
         </button>
         <div className="current-month-display">
           {format(currentMonth, 'MMMM yyyy')}
         </div>
-        <button className="nav-btn" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
+        <button className="nav-btn" onClick={() => handleMonthChange(addMonths(currentMonth, 1))}>
           <ChevronRight size={20} />
         </button>
       </div>
@@ -89,19 +99,25 @@ const CalendarGrid = ({ currentMonth, setCurrentMonth, selection, setSelection }
         const isSelectedStart = selection.start && isSameDay(day, selection.start);
         const isSelectedEnd = selection.end && isSameDay(day, selection.end);
         const inRange = isInRange(day);
-        const isTodayDate = isToday(day);
+        const holiday = isHoliday(day);
         
         days.push(
           <div
             className={`cell ${
               !isSameMonth(day, monthStart) ? "disabled" : ""
-            } ${isSelectedStart ? "selected-start" : ""} ${isSelectedEnd ? "selected-end" : ""} ${inRange ? "in-range" : ""} ${isTodayDate ? "today" : ""}`}
+            } ${isSelectedStart ? "selected-start" : ""} ${isSelectedEnd ? "selected-end" : ""} ${inRange ? "in-range" : ""} ${isTodayDate ? "today" : ""} ${holiday ? "holiday" : ""}`}
             key={day}
             onClick={() => onDateClick(cloneDay)}
             onMouseEnter={() => setHoverDate(cloneDay)}
             onMouseLeave={() => setHoverDate(null)}
           >
             <span className="number">{formattedDate}</span>
+            {holiday && !isSelectedStart && !isSelectedEnd && (
+              <div className="holiday-dot" title={holiday.name}></div>
+            )}
+            {holiday && (hoverDate && isSameDay(day, hoverDate)) && (
+              <div className="holiday-tooltip">{holiday.name}</div>
+            )}
           </div>
         );
         day = addDays(day, 1);
@@ -117,7 +133,7 @@ const CalendarGrid = ({ currentMonth, setCurrentMonth, selection, setSelection }
   };
 
   return (
-    <div className="calendar-grid">
+    <div className={`calendar-grid ${isAnimating ? 'flip-exit' : 'flip-enter'}`}>
       {renderHeader()}
       {renderDays()}
       {renderCells()}

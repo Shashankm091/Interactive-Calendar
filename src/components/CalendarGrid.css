@@ -83,6 +83,64 @@
   cursor: default;
 }
 
+.cell.today {
+  color: var(--primary);
+  font-weight: 700;
+  border: 2px solid var(--primary);
+}
+
+.cell.holiday {
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.holiday-dot {
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  background: #f59e0b;
+  border-radius: 50%;
+}
+
+.holiday-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  margin-bottom: 5px;
+  box-shadow: var(--shadow);
+}
+
+.holiday-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: #1e293b;
+}
+
+/* Animations */
+
+.flip-exit {
+  transform: rotateX(90deg);
+  opacity: 0;
+}
+
+.flip-enter {
+  transform: rotateX(0deg);
+  opacity: 1;
+}
+
 .cell.selected-start,
 .cell.selected-end {
   background: var(--primary) !important;
