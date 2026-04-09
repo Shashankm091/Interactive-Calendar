@@ -40,12 +40,12 @@
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 2rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .layout-hero {
+  min-height: 500px;
   height: 100%;
-  min-height: 600px;
 }
 
 .layout-content {
@@ -59,7 +59,8 @@
 }
 
 .notes-area {
-  height: 350px;
+  flex-grow: 1;
+  min-height: 250px;
 }
 
 .app-footer {
