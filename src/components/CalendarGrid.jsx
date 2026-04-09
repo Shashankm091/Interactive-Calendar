@@ -100,6 +100,7 @@ const CalendarGrid = ({ currentMonth, setCurrentMonth, selection, setSelection }
         const isSelectedEnd = selection.end && isSameDay(day, selection.end);
         const inRange = isInRange(day);
         const holiday = isHoliday(day);
+        const isTodayDate = isToday(day);
         
         days.push(
           <div
